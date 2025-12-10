@@ -25,6 +25,7 @@ This file helps Gemini understand your project and how you'd like it to behave.
     - All code must typecheck cleajnly with `mypy` before committing.
     - You can try to autofix format and lint issues with the `--fix` arg to `ruff`.
     - Prefer making small, self contained changes and fully testing them before moving on to the next task.
+    - Any time you add a TODO comment, create a corresponding beads issue and have the comment read "TODO(issue id): blah"
 - **Testing:** [Describe your testing preferences. For example, "Write unit tests for all new features. Use the Jest testing framework."]
     - All code must have accompanying unit tests.
     - Tests much be executed and pass before code can be committed.

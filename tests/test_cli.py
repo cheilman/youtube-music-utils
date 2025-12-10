@@ -11,10 +11,24 @@ def test_cli_version(capsys):
 
 
 def test_cli_login():
-    with patch("sys.argv", ["ym-utils", "login", "--file", "test_auth.json"]):
+    with patch(
+        "sys.argv",
+        [
+            "ym-utils",
+            "login",
+            "--file",
+            "test_auth.json",
+            "--client-id",
+            "foo",
+            "--client-secret",
+            "bar",
+        ],
+    ):
         with patch("youtube_music_utils.cli.setup_oauth") as mock_setup:
             main()
-            mock_setup.assert_called_once_with(filepath="test_auth.json")
+            mock_setup.assert_called_once_with(
+                filepath="test_auth.json", client_id="foo", client_secret="bar"
+            )
 
 
 def test_cli_help(capsys):

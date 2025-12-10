@@ -52,7 +52,24 @@ uv run pytest
 
 Lint and format:
 
+
+
 ```bash
+
 uv run ruff check .
+
 uv run ruff format .
+
+```
+
+
+
+Type check:
+
+
+
+```bash
+
+uv run mypy src tests
+
 ```

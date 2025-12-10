@@ -1,6 +1,5 @@
 import argparse
 import sys
-
 from ytmusicapi import setup_oauth
 
 
@@ -13,7 +12,13 @@ def main():
 
     # Login command
     parser_login = subparsers.add_parser("login", help="Setup authentication")
-    parser_login.add_argument("--file", default="oauth.json", help="Output file for credentials")
+    parser_login.add_argument(
+        "--file", default="oauth.json", help="Output file for credentials"
+    )
+    parser_login.add_argument("--client-id", required=True, help="OAuth Client ID")
+    parser_login.add_argument(
+        "--client-secret", required=True, help="OAuth Client Secret"
+    )
 
     args = parser.parse_args()
 
@@ -23,7 +28,11 @@ def main():
     elif args.command == "login":
         print(f"Setting up OAuth to {args.file}...")
         try:
-            setup_oauth(filepath=args.file)
+            setup_oauth(
+                client_id=args.client_id,
+                client_secret=args.client_secret,
+                filepath=args.file,
+            )
             print(f"Authentication successful! Credentials saved to {args.file}")
         except Exception as e:
             print(f"Error during authentication: {e}", file=sys.stderr)

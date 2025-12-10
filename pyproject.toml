@@ -20,6 +20,7 @@ packages = ["src/youtube_music_utils"]
 
 [dependency-groups]
 dev = [
+    "mypy>=1.19.0",
     "pytest>=9.0.2",
     "ruff>=0.14.8",
 ]
@@ -39,3 +40,13 @@ indent-style = "space"
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "W", "B"]
 ignore = []
+
+[tool.mypy]
+python_version = "3.14"
+warn_return_any = true
+warn_unused_configs = true
+check_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = "ytmusicapi.*"
+ignore_missing_imports = true

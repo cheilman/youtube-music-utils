@@ -1,5 +1,4 @@
 import argparse
-import json
 import sys
 
 from .client import Client
@@ -24,8 +23,8 @@ def main():
     elif args.command == "get-song":
         try:
             client = Client()
-            result = client.api.get_song(videoId=args.video_id)
-            print(json.dumps(result, indent=2))
+            result = client.get_song_details(video_id=args.video_id)
+            print(result)
         except Exception as e:
             print(f"Error getting song: {e}", file=sys.stderr)
             sys.exit(1)

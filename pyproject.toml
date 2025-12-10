@@ -29,9 +29,13 @@ testpaths = ["tests"]
 pythonpath = ["src"]
 
 [tool.ruff]
-line-length = 88
-target-version = "py312"
+fix = true
+line-length = 120
+
+[tool.ruff.format]
+docstring-code-format = true
+indent-style = "space"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "N", "W"]
+select = ["E", "F", "I", "N", "W", "B"]
 ignore = []

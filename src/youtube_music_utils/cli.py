@@ -13,9 +13,7 @@ def main():
 
     # Login command
     parser_login = subparsers.add_parser("login", help="Setup authentication")
-    parser_login.add_argument(
-        "--file", default="oauth.json", help="Output file for credentials"
-    )
+    parser_login.add_argument("--file", default="oauth.json", help="Output file for credentials")
 
     args = parser.parse_args()
 

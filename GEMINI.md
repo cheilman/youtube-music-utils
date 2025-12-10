@@ -2,6 +2,11 @@
 
 This file helps Gemini understand your project and how you'd like it to behave.
 
+## CRITICAL
+
+**Do not use "git add ." or "git commit -a" EVER!**
+**ALWAYS use "git add <filename>" to specifically add the files that you created or modified.**
+
 ## Project Information
 
 - **Project Name:** YouTube Music Utilities

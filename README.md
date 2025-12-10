@@ -19,6 +19,9 @@ The project provides a CLI tool `ym-utils`.
 ```bash
 # Show version
 uv run ym-utils version
+
+# Get song metadata by ID
+uv run ym-utils get-song <video_id>
 ```
 
 ### Library

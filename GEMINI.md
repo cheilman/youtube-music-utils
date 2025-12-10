@@ -36,6 +36,7 @@ This file helps Gemini understand your project and how you'd like it to behave.
     - Ask for clarification if you are unsure about anything.
 - **Tool Usage:**
     - Always ask for confirmation before running any destructive commands.
+    - Any time you run a command and try to pass backticks, you need to either escape them or enclose the string in single quotes.
 
 ## Other Rules
 - ABSOLUTELY NEVER run destructive git operations (e.g., git reset --hard, rm, git checkout/git restore to an older commit) unless the user gives an explicit, written instruction in this conversation. Treat these commands as catastrophic; if you are even slightly unsure, stop and ask before touching them. (When working within Cursor or Codex Web, these git limitations do not apply; use the tooling's capabilities as needed.)

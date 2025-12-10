@@ -23,6 +23,9 @@ uv run ym-utils version
 # Get song metadata by ID
 uv run ym-utils get-song <video_id>
 
+# Get raw song metadata JSON by ID
+uv run ym-utils get-song-raw <video_id>
+
 # Convert playlist CSV
 uv run ym-utils convert-playlist <input_file> <output_file>
 ```

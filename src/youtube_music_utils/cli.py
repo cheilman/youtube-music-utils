@@ -1,4 +1,5 @@
 import argparse
+import json
 import sys
 
 from .client import Client
@@ -16,6 +17,10 @@ def main():
     parser_get_song = subparsers.add_parser("get-song", help="Get song metadata by Video ID")
     parser_get_song.add_argument("video_id", help="The Video ID of the song")
 
+    # Get Song Raw command
+    parser_get_song_raw = subparsers.add_parser("get-song-raw", help="Get raw song metadata JSON by Video ID")
+    parser_get_song_raw.add_argument("video_id", help="The Video ID of the song")
+
     # Convert Playlist command
     parser_convert = subparsers.add_parser("convert-playlist", help="Convert playlist CSV with enriched metadata")
     parser_convert.add_argument("input_file", help="Path to input CSV file")
@@ -31,6 +36,14 @@ def main():
             client = Client()
             result = client.get_song_details(video_id=args.video_id)
             print(result)
+        except Exception as e:
+            print(f"Error getting song: {e}", file=sys.stderr)
+            sys.exit(1)
+    elif args.command == "get-song-raw":
+        try:
+            client = Client()
+            result_raw = client.api.get_song(videoId=args.video_id)
+            print(json.dumps(result_raw, indent=2))
         except Exception as e:
             print(f"Error getting song: {e}", file=sys.stderr)
             sys.exit(1)

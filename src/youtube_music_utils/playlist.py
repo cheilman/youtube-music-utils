@@ -14,7 +14,7 @@ def convert_playlist(input_file: TextIO, output_file: TextIO, client: Client) ->
         client: Initialized Client for fetching song details.
     """
     reader = csv.reader(input_file)
-    writer = csv.writer(output_file)
+    writer = csv.writer(output_file, lineterminator="\n")
 
     # State machine to handle the file sections
     # 0: Playlist Metadata

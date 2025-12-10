@@ -31,7 +31,7 @@ id1,Song1,Artist1,Album1
     convert_playlist(input_file, output_file, mock_client)
 
     # Check output, normalizing newlines for cross-platform safety
-    assert output_file.getvalue().replace("\r\n", "\n") == expected_output
+    assert output_file.getvalue() == expected_output
 
 
 def test_convert_playlist_fetch_error():
@@ -46,6 +46,6 @@ id1
 
     convert_playlist(input_file, output_file, mock_client)
 
-    output = output_file.getvalue().replace("\r\n", "\n")
+    output = output_file.getvalue()
     assert "VideoId,Title,Artist,Album" in output
     assert "id1,ERROR,ERROR,ERROR" in output

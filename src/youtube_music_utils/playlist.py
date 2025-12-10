@@ -17,9 +17,13 @@ def convert_playlist(input_file: TextIO, output_file: TextIO, client: Client) ->
     writer = csv.writer(output_file, lineterminator="\n")
 
     # State machine to handle the file sections
-    # 0: Playlist Metadata
-    # 1: Song Header found, switch to processing songs
+    # 0: Playlist Metadata Header
+    # 1: Playlist Metadata Values
+    # 2: Gap/Other
+    # 3: Song Header found, switch to processing songs
     state = 0
+    header_indices = []
+    target_columns = ["Playlist Id", "Channel Id", "Title", "Description"]
 
     for row in reader:
         if not row:
@@ -27,15 +31,51 @@ def convert_playlist(input_file: TextIO, output_file: TextIO, client: Client) ->
             continue
 
         if state == 0:
+            # Expecting Header Row
             if row[0].strip() == "Video Id":
-                # Found the start of the songs section
-                # Write the new header
+                # No metadata or skipped? Should not happen based on spec but handle safely
                 writer.writerow(["VideoId", "Title", "Artist", "Album"])
-                state = 1
+                state = 3
             else:
-                # Still in metadata section, just copy
-                writer.writerow(row)
+                # Calculate indices for target columns
+                header_indices = []
+                current_header = row
+                for col in target_columns:
+                    try:
+                        index = current_header.index(col)
+                        header_indices.append(index)
+                    except ValueError:
+                        # Column not found, handle gracefully?
+                        # For now, append -1 to indicate missing
+                        header_indices.append(-1)
+                
+                # Write filtered header
+                writer.writerow(target_columns)
+                state = 1
+
         elif state == 1:
+            # Expecting Value Row
+            filtered_values = []
+            for index in header_indices:
+                if index != -1 and index < len(row):
+                    filtered_values.append(row[index])
+                else:
+                    filtered_values.append("")
+            writer.writerow(filtered_values)
+            state = 2
+
+        elif state == 2:
+            # Waiting for Song Section
+            if row[0].strip() == "Video Id":
+                writer.writerow(["VideoId", "Title", "Artist", "Album"])
+                state = 3
+            else:
+                # Just copy unknown rows in between? or ignore?
+                # Example shows empty line which is handled by `if not row` check at start.
+                # If there are other lines, maybe preserve them?
+                writer.writerow(row)
+
+        elif state == 3:
             # Processing songs
             video_id = row[0]
             try:

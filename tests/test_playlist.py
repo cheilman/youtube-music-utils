@@ -7,14 +7,14 @@ from youtube_music_utils.playlist import convert_playlist
 
 
 def test_convert_playlist_basic():
-    input_csv = """Playlist Header,Some Value
-Value1,Value2
+    input_csv = """Playlist Id,Channel Id,Time Created,Title,Description
+PL123,UC456,2021-01-01,My Playlist,Desc
 
 Video Id,Time Added
 id1,2021-01-01
 """
-    expected_output = """Playlist Header,Some Value
-Value1,Value2
+    expected_output = """Playlist Id,Channel Id,Title,Description
+PL123,UC456,My Playlist,Desc
 
 VideoId,Title,Artist,Album
 id1,Song1,Artist1,Album1

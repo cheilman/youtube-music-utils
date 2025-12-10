@@ -1,5 +1,5 @@
 from datetime import timedelta
-from unittest.mock import patch
+from unittest.mock import mock_open, patch
 
 from youtube_music_utils.cli import main
 from youtube_music_utils.models import SongDetails
@@ -21,7 +21,11 @@ def test_cli_help(capsys):
 
 def test_cli_get_song(capsys):
     mock_details = SongDetails(
-        title="Test Title", artist="Test Artist", album="Test Album", video_id="test_id", length=timedelta(seconds=180)
+        title="Test Title",
+        artist="Test Artist",
+        album="Test Album",
+        video_id="test_id",
+        length=timedelta(seconds=180),
     )
     with patch("sys.argv", ["ym-utils", "get-song", "test_id"]):
         with patch("youtube_music_utils.cli.Client") as mock_client_cls:
@@ -34,3 +38,18 @@ def test_cli_get_song(capsys):
             captured = capsys.readouterr()
             assert "Test Title" in captured.out
             assert "Test Album" in captured.out
+
+
+def test_cli_convert_playlist(capsys):
+    with patch("sys.argv", ["ym-utils", "convert-playlist", "in.csv", "out.csv"]):
+        with (
+            patch("youtube_music_utils.cli.Client") as mock_client_cls,
+            patch("youtube_music_utils.cli.convert_playlist") as mock_convert,
+            patch("builtins.open", mock_open()),
+        ):
+            main()
+
+            assert mock_client_cls.called
+            assert mock_convert.called
+            captured = capsys.readouterr()
+            assert "Successfully converted playlist" in captured.out
